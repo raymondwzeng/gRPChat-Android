@@ -22,7 +22,7 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[ChatViewModel::class.java]
+        viewModel = ViewModelProvider(this)[ChatViewModel::class.java] //TODO: Delegate to Activity
         binding = FragmentChatBinding.inflate(inflater, container, false)
 
         binding.messageContainer.adapter = ChatAdapter(viewModel.messages)
@@ -32,7 +32,7 @@ class ChatFragment : Fragment() {
             if(binding.chatInput.text.isNotEmpty()) {
                viewModel.sendMessage(binding.chatInput.text.toString())
                 binding.chatInput.text.clear()
-                binding.messageContainer.adapter?.notifyDataSetChanged()
+                binding.messageContainer.adapter?.notifyItemInserted(viewModel.messages.lastIndex)
             }
         }
 
