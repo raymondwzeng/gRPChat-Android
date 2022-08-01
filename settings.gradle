@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "gRPChat Android"
 include ':app'
 include ':backend'
+include ':protos'

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+service ChatService {
+  rpc GetServerInformation(Nothing) returns (ServerInformation);
+  rpc ChatBidirectional(stream ChatToServer) returns (stream ChatToClient);
+}
+
+message ChatToServer {
+  string content = 1;
+}
+
+message ChatToClient {
+  string author = 1;
+  string content = 2;
+  //TODO: Maybe additional IRC-like goodies like a timestamp?
+}
+
+message ServerInformation {
+  string topic = 1;
+}
+
+message Nothing{}

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="1.7">
+    <bytecodeTargetLevel target="1.8">
       <module name="gRPChat_Android.app" target="11" />
+      <module name="gRPChat_Android.backend.main" target="8" />
+      <module name="gRPChat_Android.backend.test" target="8" />
+      <module name="gRPChat_Android.protos" target="11" />
+      <module name="gRPChat_Android.protos.main" target="11" />
+      <module name="gRPChat_Android.protos.test" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
