@@ -16,3 +16,4 @@ rootProject.name = "gRPChat Android"
 include ':app'
 include ':backend'
 include ':protos'
+include ':android-stub'

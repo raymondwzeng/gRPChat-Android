@@ -35,6 +35,10 @@ android {
 }
 
 dependencies {
+    //GRPC Stuff
+    implementation 'io.grpc:grpc-okhttp:1.48.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-protobuf-lite:1.48.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-stub:1.48.0' // CURRENT_GRPC_VERSION
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
