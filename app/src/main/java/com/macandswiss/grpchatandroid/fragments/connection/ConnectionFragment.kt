@@ -28,11 +28,10 @@ class ConnectionFragment : Fragment() {
         val navController = findNavController()
 
         binding.connectButton.setOnClickListener {
+            val hostAndPort = binding.hostPortInput.text.toString().split(":")
+            //TODO: Error handling of invalid host-port combinations
+            viewModel.connect(hostAndPort[0], hostAndPort[1].toInt())
             navController.navigate(R.id.chatFragment)
-        }
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                viewModel.connect()
         }
 
         return binding.root
