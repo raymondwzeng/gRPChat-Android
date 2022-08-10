@@ -1,6 +1,10 @@
 package com.macandswiss.grpchatandroid.fragments.chat
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.macandswiss.grpchatandroid.grpc.ChatRPC
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 
 /**
  * @author Raymond Zeng
@@ -9,27 +13,19 @@ import androidx.lifecycle.ViewModel
  * local client's chatting.
  */
 class ChatViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
     val messages = mutableListOf<Message>()
 
-    fun sendMessage(message: String) {
-        //TODO: Also grab the author from somewhere
-        messages.add(Message(
-            author = "Unknown",
-            content = message
-        ))
+    suspend fun connectionEstablished() {
+        ChatRPC.getChannelInfo().onSuccess {
+            messages.add(Message("System", it.topic))
+        } .onFailure {
+            messages.add(Message("System", "Failed to connect to server."))
+        }
     }
 
-    companion object SampleChatData {
-        val messages = listOf(
-            Message(
-                author = "MacAndSwiss",
-                content = "Hello, world!"
-            ),
-            Message(
-                author = "MacAndSwiss",
-                content = "This is a test of the recyclerview!"
-            )
-        )
+    suspend fun sendMessage(message: String) {
+        ChatRPC.sendChat(message).collect { chat ->
+            messages.add(Message(chat.author, chat.content))
+        }
     }
 }
