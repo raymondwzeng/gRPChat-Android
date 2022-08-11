@@ -10,3 +10,4 @@ A simple gRPChat client for Android.
 - Similarly, the backend configuration build file has its intellisense for the generated files commented out. The backend will still build and run, but Android Studio will complain about that missing reference.
 - Internet permissions, as always.
 - Using some sort of authentication is required from the client side, even if it is plaintext.
+- Returning `super.foo` in the server side of an override function will result in a "method not implemented" error on the frontend, even if you have implemented something and return essentially nothing. Maybe Google's `empty` solves this.
