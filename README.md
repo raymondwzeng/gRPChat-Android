@@ -2,7 +2,6 @@
 A simple gRPChat client for Android.
 
 ## Still To-Do
-- Fully implement chatting feature using Kotlin flows and gRPC bi-directional streaming
 - Implement more services, allowing for greater flexibility in configuration
 - Unit testing the hell out of everything :)
 
