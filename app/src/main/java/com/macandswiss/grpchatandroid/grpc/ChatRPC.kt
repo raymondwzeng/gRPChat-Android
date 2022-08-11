@@ -7,9 +7,6 @@ import io.grpc.ManagedChannelBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.flowOn
 
 object ChatRPC : ChatClient<ManagedChannel, Grpchat.ChatToClient, Grpchat.ChatToServer, Grpchat.ServerInformation> {
     private lateinit var channel: ManagedChannel
@@ -23,12 +20,16 @@ object ChatRPC : ChatClient<ManagedChannel, Grpchat.ChatToClient, Grpchat.ChatTo
         }
     }
 
-    override fun sendChat(message:String): Flow<Grpchat.ChatToClient> {
-        return stub.chatBidirectional(chatRequest(message))
+    override suspend fun sendChat(message:String) {
+        stub.sendChat(Grpchat.ChatToServer.newBuilder().setContent(message).build())
     }
 
-    private fun chatRequest(message: String) : Flow<Grpchat.ChatToServer> = flow {
-        emit(Grpchat.ChatToServer.newBuilder().setContent(message).build())
+    override fun subscribe(): Result<Flow<Grpchat.ChatToClient>> {
+        return try {
+            Result.success(stub.subscribeToChannel(Grpchat.Nothing.newBuilder().build()))
+        } catch (e: Exception) {
+            Result.failure(Throwable(e.message))
+        }
     }
 
     override fun close() { //TODO: Do we need to think about how to manage the flows and stuff once the channel is down?

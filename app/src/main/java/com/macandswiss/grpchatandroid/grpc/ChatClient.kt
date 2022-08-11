@@ -10,6 +10,7 @@ import java.io.Closeable
  */
 interface ChatClient<ChannelType, ClientChatType, ServerChatType, ServerInformationType> : Closeable {
     suspend fun getChannelInfo(): Result<ServerInformationType>
-    fun sendChat(message: String) : Flow<ClientChatType>
+    suspend fun sendChat(message: String)
+    fun subscribe() : Result<Flow<ClientChatType>>
     fun connect(host: String, port: Int) : Result<ChannelType>
 }

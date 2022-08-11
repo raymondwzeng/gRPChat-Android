@@ -18,14 +18,20 @@ class ChatViewModel : ViewModel() {
     suspend fun connectionEstablished() {
         ChatRPC.getChannelInfo().onSuccess {
             messages.add(Message("System", it.topic))
+            ChatRPC.subscribe().onSuccess { chatFlow ->
+                chatFlow.collect { chat ->
+                    println("Collected chat: $chat")
+                    messages.add(Message(chat.author, chat.content))
+                }
+            }.onFailure {
+                messages.add(Message("System", "Failed to subscribe to channel."))
+            }
         } .onFailure {
             messages.add(Message("System", "Failed to connect to server."))
         }
     }
 
     suspend fun sendMessage(message: String) {
-        ChatRPC.sendChat(message).collect { chat ->
-            messages.add(Message(chat.author, chat.content))
-        }
+        ChatRPC.sendChat(message)
     }
 }
