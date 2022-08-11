@@ -2,7 +2,8 @@ syntax = "proto3";
 
 service ChatService {
   rpc GetServerInformation(Nothing) returns (ServerInformation);
-  rpc ChatBidirectional(stream ChatToServer) returns (stream ChatToClient);
+  rpc SubscribeToChannel(Nothing) returns (stream ChatToClient);
+  rpc SendChat(ChatToServer) returns (Nothing);
 }
 
 message ChatToServer {
@@ -19,4 +20,4 @@ message ServerInformation {
   string topic = 1;
 }
 
-message Nothing{}
+message Nothing{} //TODO: Replace with google's empty?
