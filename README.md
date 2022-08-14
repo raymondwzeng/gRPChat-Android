@@ -1,5 +1,6 @@
 # gRPChat-Android
-A simple gRPChat client for Android.
+A simple gRPChat client for Android, along with the base backend to connect to.
+Users can connect to a server and send/receive messages from other connected clients, similar to how Internet Relay Chat (IRC) works.
 
 ## Still To-Do
 - Implement more services, allowing for greater flexibility in configuration
