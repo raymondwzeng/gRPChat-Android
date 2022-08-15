@@ -2,13 +2,17 @@ package com.macandswiss.grpchatandroid.grpc
 
 import ChatServiceGrpcKt
 import Grpchat
+import android.app.Application
+import android.net.InetAddresses
 import io.grpc.ManagedChannel
 import io.grpc.ManagedChannelBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
 import kotlinx.coroutines.flow.Flow
+import java.net.InetAddress
 
 object ChatRPC : ChatClient<ManagedChannel, Grpchat.ChatToClient, Grpchat.ChatToServer, Grpchat.ServerInformation> {
+    var nickname: String = "User"
     private lateinit var channel: ManagedChannel
     private lateinit var stub : ChatServiceGrpcKt.ChatServiceCoroutineStub
 
@@ -21,7 +25,7 @@ object ChatRPC : ChatClient<ManagedChannel, Grpchat.ChatToClient, Grpchat.ChatTo
     }
 
     override suspend fun sendChat(message:String) {
-        stub.sendChat(Grpchat.ChatToServer.newBuilder().setContent(message).build())
+        stub.sendChat(Grpchat.ChatToServer.newBuilder().setAuthor(nickname).setContent(message).build())
     }
 
     override fun subscribe(): Result<Flow<Grpchat.ChatToClient>> {

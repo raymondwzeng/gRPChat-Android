@@ -11,6 +11,7 @@ import androidx.lifecycle.whenCreated
 import androidx.navigation.fragment.findNavController
 import com.macandswiss.grpchatandroid.R
 import com.macandswiss.grpchatandroid.databinding.FragmentConnectionBinding
+import com.macandswiss.grpchatandroid.grpc.ChatRPC
 
 class ConnectionFragment : Fragment() {
 
@@ -31,6 +32,7 @@ class ConnectionFragment : Fragment() {
             val hostAndPort = binding.hostPortInput.text.toString().split(":")
             //TODO: Error handling of invalid host-port combinations
             viewModel.connect(hostAndPort[0], hostAndPort[1].toInt())
+            ChatRPC.nickname = binding.nicknameInput.text.toString()
             navController.navigate(R.id.chatFragment)
         }
 

@@ -1,5 +1,6 @@
 package com.macandswiss.grpchatandroid.fragments.chat
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.macandswiss.grpchatandroid.grpc.ChatRPC
@@ -33,5 +34,9 @@ class ChatViewModel : ViewModel() {
 
     suspend fun sendMessage(message: String) {
         ChatRPC.sendChat(message)
+    }
+
+    fun disconnect() {
+//        ChatRPC.disconnect()
     }
 }
